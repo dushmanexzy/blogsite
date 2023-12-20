@@ -1,6 +1,17 @@
-from django.http import HttpResponse
+from rest_framework import generics
+from .models import Post, Comment
+from .serializers import PostSerializer, CommentSerializer
 
 
-# Create your views here.
-def index(request):
-    return HttpResponse('<div id="root">ROOT</div>')
+class PostList(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class CommentCreate(generics.CreateAPIView):
+    serializer_class = CommentSerializer
